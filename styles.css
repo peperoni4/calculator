@@ -89,6 +89,11 @@ body {
   box-shadow: 4px 5px black;
 }
 
+.btn-wide {
+  border-radius: 10%;
+  flex: 2;
+}
+
 .btn:active {
   box-shadow: none;
   transform: scale(0.95);
@@ -99,9 +104,18 @@ body {
 }
 
 .equals-btn {
-  background-color: #fd7e14;
+  background-color: #fc8422;
 }
 
 .equals-btn:hover {
-  background-color: #e66800;
+  background-color: #f97000;
+}
+
+.btn-clear {
+  color: #fff;
+  background-color: #e03131;
+}
+
+.btn-clear:hover {
+  background-color: #c60505;
 }
