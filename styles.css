@@ -87,6 +87,14 @@ body {
   cursor: pointer;
 }
 
+.btn:hover {
+  background-color: rgb(215, 217, 219);
+}
+
 .equals-btn {
   background-color: #fd7e14;
+}
+
+.equals-btn:hover {
+  background-color: #e66800;
 }
