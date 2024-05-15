@@ -2,6 +2,19 @@ let firstOperand = null;
 let secondOperand = null;
 let operator = null;
 
+const numberButtons = document.querySelectorAll(".btn-number");
+const mainLine = document.querySelector(".main-line");
+const previousLine = document.querySelector(".previous-line");
+
+numberButtons.forEach((numberBtn) => {
+  numberBtn.addEventListener("click", numberButtonHandler);
+});
+
+function numberButtonHandler(e) {
+  const buttonValue = e.target.textContent;
+  mainLine.textContent += buttonValue;
+}
+
 function add(a, b) {
   return a + b;
 }

@@ -45,7 +45,7 @@ body {
   background-color: #a5d8ff;
   border: 2px solid black;
   border-radius: 7%;
-  padding: 10px;
+  padding: 5px 18px;
 
   display: flex;
   flex-direction: column;
@@ -60,6 +60,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: end;
+  overflow: hidden;
 }
 
 .buttons-grid {
@@ -103,11 +104,11 @@ body {
   background-color: rgb(215, 217, 219);
 }
 
-.equals-btn {
+.btn-equals {
   background-color: #fc8422;
 }
 
-.equals-btn:hover {
+.btn-equals:hover {
   background-color: #f97000;
 }
 
