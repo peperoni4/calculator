@@ -10,6 +10,7 @@ const previousLine = document.querySelector(".previous-line");
 let firstOperand = null;
 let secondOperand = null;
 let operator = null;
+let isAnyOperatorBtnPressed = false;
 
 clearAllButton.addEventListener("click", clearAllLines);
 clearOneButton.addEventListener("click", clearOneCharacter);
@@ -24,7 +25,12 @@ operatorButtons.forEach((operatorBtn) => {
 
 function operatorButtonHandler(e) {
   const buttonValue = e.target.textContent;
-  mainLine.textContent += buttonValue;
+  // if operator pressed but not minus that means we can still add unary minus to the operand
+  if (!isAnyOperatorBtnPressed || (operator !== "-" && buttonValue === "-")) {
+    mainLine.textContent += buttonValue;
+    operator = buttonValue;
+    isAnyOperatorBtnPressed = true;
+  }
 }
 
 function numberButtonHandler(e) {
