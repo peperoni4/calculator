@@ -1,14 +1,25 @@
+const numberButtons = document.querySelectorAll(".btn-number");
+const operatorButtons = document.querySelectorAll(".btn-operator");
+
+const mainLine = document.querySelector(".main-line");
+const previousLine = document.querySelector(".previous-line");
+
 let firstOperand = null;
 let secondOperand = null;
 let operator = null;
 
-const numberButtons = document.querySelectorAll(".btn-number");
-const mainLine = document.querySelector(".main-line");
-const previousLine = document.querySelector(".previous-line");
-
 numberButtons.forEach((numberBtn) => {
   numberBtn.addEventListener("click", numberButtonHandler);
 });
+
+operatorButtons.forEach((operatorBtn) => {
+  operatorBtn.addEventListener("click", operatorButtonHandler);
+});
+
+function operatorButtonHandler(e) {
+  const buttonValue = e.target.textContent;
+  mainLine.textContent += buttonValue;
+}
 
 function numberButtonHandler(e) {
   const buttonValue = e.target.textContent;
