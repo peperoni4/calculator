@@ -62,7 +62,7 @@ function changeStyleToError() {
 }
 
 function changeStyleToNormal() {
-  mainLine.style.fontSize = "72px";
+  mainLine.style.fontSize = "84px";
   mainLine.style.color = "black";
   isError = false;
 }
