@@ -92,6 +92,10 @@ function isUnaryMinus(currentOperator) {
 
 function numberButtonHandler(e) {
   const buttonValue = e.target.textContent;
+  if (mainLine.textContent === "0" || isError) {
+    if (isError) changeStyleToNormal();
+    mainLine.textContent = "";
+  }
   mainLine.textContent += buttonValue;
 }
 
