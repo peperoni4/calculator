@@ -9,6 +9,7 @@ const mainLine = document.querySelector(".main-line");
 const previousLine = document.querySelector(".previous-line");
 
 let operator = null;
+let nextOperator = null;
 let isAnyOperatorBtnPressed = false;
 let isError = false;
 
@@ -24,14 +25,34 @@ operatorButtons.forEach((operatorBtn) => {
   operatorBtn.addEventListener("click", operatorButtonHandler);
 });
 
+function getOperands(str) {
+  const operatorIndex = getOperatorIndex(str);
+  if (operatorIndex === -1) return [null, null];
+  return [str.slice(0, operatorIndex), str.slice(operatorIndex + 1)];
+}
+
+function getOperatorIndex(str) {
+  let isOperatorEncountered = false;
+  // begin from 1 to skip potential unary minus
+  for (let i = 1; i < str.length; ++i) {
+    if (str[i] === operator) return i;
+  }
+  return -1;
+}
+
 function equalsBtnHandler(e) {
-  const [firstOperand, secondOperand] = mainLine.textContent.split(operator);
+  const [firstOperand, secondOperand] = getOperands(mainLine.textContent);
   if (!firstOperand || !secondOperand || !operator) return;
   previousLine.textContent = mainLine.textContent + "=";
   const result = operate(+firstOperand, +secondOperand, operator);
   if (typeof result === "string") changeStyleToError();
   mainLine.textContent = result;
-  isAnyOperatorBtnPressed = false;
+  if (nextOperator) {
+    mainLine.textContent += nextOperator;
+    operator = nextOperator;
+    nextOperator = null;
+    isAnyOperatorBtnPressed = true;
+  } else isAnyOperatorBtnPressed = false;
 }
 
 function changeStyleToError() {
@@ -48,12 +69,25 @@ function changeStyleToNormal() {
 
 function operatorButtonHandler(e) {
   const buttonValue = e.target.textContent;
-  // if operator pressed but not minus that means we can still add unary minus to the second operand
-  if (!isAnyOperatorBtnPressed || (operator !== "-" && buttonValue === "-")) {
+  if (isUnaryMinus(buttonValue)) {
+    if (operator === "-" && buttonValue === "-") return;
     mainLine.textContent += buttonValue;
+  } else if (!isAnyOperatorBtnPressed) {
     operator = buttonValue;
+    mainLine.textContent += buttonValue;
     isAnyOperatorBtnPressed = true;
+  } else if (isAnyOperatorBtnPressed && !nextOperator) {
+    nextOperator = buttonValue;
+    equalsBtnHandler();
   }
+}
+
+function isUnaryMinus(currentOperator) {
+  return (
+    currentOperator === "-" &&
+    (mainLine.textContent.length === 0 ||
+      (operator && mainLine.textContent.at(-1) === operator))
+  );
 }
 
 function numberButtonHandler(e) {
