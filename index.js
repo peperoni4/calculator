@@ -80,10 +80,15 @@ function operatorButtonHandler(e) {
     operator = buttonValue;
     mainLine.textContent += buttonValue;
     isAnyOperatorBtnPressed = true;
-  } else if (isAnyOperatorBtnPressed && !nextOperator) {
+  } else if (isAnyOperatorBtnPressed && !nextOperator && hasSecondOperand()) {
     nextOperator = buttonValue;
     equalsBtnHandler();
   }
+}
+
+function hasSecondOperand() {
+  const numbers = "0123456789";
+  return numbers.includes(mainLine.textContent.at(-1));
 }
 
 function isUnaryMinus(currentOperator) {
