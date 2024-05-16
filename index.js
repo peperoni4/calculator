@@ -10,6 +10,7 @@ const previousLine = document.querySelector(".previous-line");
 
 let operator = null;
 let isAnyOperatorBtnPressed = false;
+let isError = false;
 
 clearAllButton.addEventListener("click", clearAllLines);
 clearOneButton.addEventListener("click", clearOneCharacter);
@@ -28,8 +29,21 @@ function equalsBtnHandler(e) {
   if (!firstOperand || !secondOperand || !operator) return;
   previousLine.textContent = mainLine.textContent + "=";
   const result = operate(+firstOperand, +secondOperand, operator);
+  if (typeof result === "string") changeStyleToError();
   mainLine.textContent = result;
   isAnyOperatorBtnPressed = false;
+}
+
+function changeStyleToError() {
+  mainLine.style.fontSize = "52px";
+  mainLine.style.color = "red";
+  isError = true;
+}
+
+function changeStyleToNormal() {
+  mainLine.style.fontSize = "72px";
+  mainLine.style.color = "black";
+  isError = false;
 }
 
 function operatorButtonHandler(e) {
@@ -50,6 +64,8 @@ function numberButtonHandler(e) {
 function clearAllLines() {
   mainLine.textContent = "0";
   previousLine.textContent = "";
+  isAnyOperatorBtnPressed = false;
+  changeStyleToNormal();
 }
 
 function clearOneCharacter() {
@@ -87,10 +103,10 @@ function operate(a, b, operator) {
     case "*":
       return multiply(a, b);
     case "/":
-      if (b === 0) return "ERROR: Division by zero!";
+      if (b === 0) return "Division by zero!";
       return divide(a, b);
     case "%":
-      if (b === 0) return "ERROR: Division by zero!";
+      if (b === 0) return "Division by zero!";
       return modularDivision(a, b);
 
     default:
