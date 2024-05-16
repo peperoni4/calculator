@@ -69,6 +69,10 @@ function changeStyleToNormal() {
 
 function operatorButtonHandler(e) {
   const buttonValue = e.target.textContent;
+  if (isError) {
+    mainLine.textContent = buttonValue === "-" ? "" : "0";
+    changeStyleToNormal();
+  }
   if (isUnaryMinus(buttonValue)) {
     if (operator === "-" && buttonValue === "-") return;
     mainLine.textContent += buttonValue;
