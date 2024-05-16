@@ -96,6 +96,13 @@ function isUnaryMinus(currentOperator) {
 
 function numberButtonHandler(e) {
   const buttonValue = e.target.textContent;
+  // prevent leading zeros for second operand
+  if (
+    buttonValue === "0" &&
+    mainLine.textContent.at(-1) === "0" &&
+    mainLine.textContent.at(-2) === operator
+  )
+    return;
   if (mainLine.textContent === "0" || isError) {
     if (isError) changeStyleToNormal();
     mainLine.textContent = "";
