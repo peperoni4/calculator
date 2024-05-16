@@ -73,6 +73,10 @@ function divide(a, b) {
   return a / b;
 }
 
+function modularDivision(a, b) {
+  return a % b;
+}
+
 function operate(a, b, operator) {
   switch (operator) {
     case "+":
@@ -84,6 +88,9 @@ function operate(a, b, operator) {
     case "/":
       if (b === 0) return "ERROR: Division by zero!";
       return divide(a, b);
+    case "%":
+      if (b === 0) return "ERROR: Division by zero!";
+      return modularDivision(a, b);
 
     default:
       return `Unsupported operation - ${operator}!`;

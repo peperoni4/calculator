@@ -15,4 +15,4 @@ An on-screen calculator using JavaScript, HTML, and CSS.
 - [ ] When user enters number for the first time - delete leading zero.
 - [ ] Prevent user from entering two decimal points in one operand.
 - [ ] When user clears single character we should check if we delete operator character to give possibility to the user to enter new operator again.
-- [ ] Add modulus division operator support.
+- [x] Add modulus division operator support.
