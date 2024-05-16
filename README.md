@@ -8,7 +8,7 @@ An on-screen calculator using JavaScript, HTML, and CSS.
 
 ### Current bugs:
 
-- [ ] Pressing '=' before entering all of the numbers or an operator could cause problems!
+- [x] Pressing '=' before entering all of the numbers or an operator could cause problems!
 - [ ] Display a snarky error message if the user tries to divide by 0… and don’t let it crash your calculator!
 - [ ] Round answers with long decimals so that they don’t overflow the screen.
 - [ ] When user enters one more operator after second operand, we should calculate first expression and than place the result as a first operand of the new expression with this operator.

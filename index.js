@@ -25,6 +25,7 @@ operatorButtons.forEach((operatorBtn) => {
 
 function equalsBtnHandler(e) {
   const [firstOperand, secondOperand] = mainLine.textContent.split(operator);
+  if (!firstOperand || !secondOperand || !operator) return;
   previousLine.textContent = mainLine.textContent + "=";
   const result = operate(+firstOperand, +secondOperand, operator);
   mainLine.textContent = result;
