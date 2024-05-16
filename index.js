@@ -68,6 +68,7 @@ function changeStyleToNormal() {
 }
 
 function operatorButtonHandler(e) {
+  // TODO: FORBID TO ENTER OPERATORS WHEN THERE IS NO FIRST OPERAND
   const buttonValue = e.target.textContent;
   if (isError) {
     mainLine.textContent = buttonValue === "-" ? "" : "0";
@@ -103,16 +104,53 @@ function numberButtonHandler(e) {
   const buttonValue = e.target.textContent;
   // prevent leading zeros for second operand
   if (
-    buttonValue === "0" &&
-    mainLine.textContent.at(-1) === "0" &&
-    mainLine.textContent.at(-2) === operator
+    isNextNumberAlsoLeadingZero(buttonValue) ||
+    isSecondDecimalPoint(buttonValue)
   )
     return;
-  if (mainLine.textContent === "0" || isError) {
+  if (isDotUsedWithEmptyOperand(buttonValue)) mainLine.textContent += "0";
+  else if (buttonValue !== "." && (mainLine.textContent === "0" || isError)) {
     if (isError) changeStyleToNormal();
     mainLine.textContent = "";
   }
   mainLine.textContent += buttonValue;
+}
+
+function isDotUsedWithEmptyOperand(buttonValue) {
+  const previousChar = mainLine.textContent.at(-1);
+  return (
+    buttonValue === "." &&
+    // empty line or unary minus in front of the operand
+    (mainLine.textContent.length === 0 || // ". case"
+      previousChar === "-" || // "-. or 12-. case"
+      previousChar === operator) // "12-. case"
+  );
+}
+
+function isSecondDecimalPoint(decimalPointChar) {
+  if (decimalPointChar !== ".") return false;
+  if (!operator) {
+    // no operator means that we are working with first operand
+    const firstOperand = mainLine.textContent;
+    return isSecondDecimalPointInOperand(firstOperand, decimalPointChar);
+  } else {
+    const secondOperand = getOperands(mainLine.textContent)[1];
+    return isSecondDecimalPointInOperand(secondOperand, decimalPointChar);
+  }
+}
+
+function isSecondDecimalPointInOperand(operand, decimalPointChar) {
+  if (!operand) return false;
+  if (operand.includes(decimalPointChar)) return true;
+  return false;
+}
+
+function isNextNumberAlsoLeadingZero(number) {
+  return (
+    number === "0" &&
+    mainLine.textContent.at(-1) === "0" &&
+    mainLine.textContent.at(-2) === operator
+  );
 }
 
 function clearAllLines() {
