@@ -113,6 +113,14 @@ body {
   background-color: #f97000;
 }
 
+.btn-operator {
+  background-color: cornflowerblue;
+}
+
+.btn-operator:hover {
+  background-color: rgb(53, 114, 230);
+}
+
 .btn-clear {
   color: #fff;
   background-color: #e03131;
