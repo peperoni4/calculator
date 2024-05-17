@@ -6,7 +6,7 @@ An on-screen calculator using JavaScript, HTML, and CSS.
 
 ![Design](./img/doc/design.png)
 
-### Current bugs:
+### TODO:
 
 - [x] Pressing '=' before entering all of the numbers or an operator could cause problems!
 - [x] Display a snarky error message if the user tries to divide by 0… and don’t let it crash your calculator!
@@ -16,3 +16,4 @@ An on-screen calculator using JavaScript, HTML, and CSS.
 - [x] Prevent user from entering two decimal points in one operand.
 - [x] When user clears single character we should check if we delete operator character to give possibility to the user to enter new operator again.
 - [x] Add modulus division operator support.
+- [ ] Add keyboard support
