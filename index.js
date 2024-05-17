@@ -28,6 +28,27 @@ operatorButtons.forEach((operatorBtn) => {
   operatorBtn.addEventListener("click", operatorButtonHandler);
 });
 
+window.addEventListener("keydown", (e) => {
+  const btn = getPressedBtn(e);
+  if (!btn) return;
+
+  btn.classList.add("btn-active");
+  const event = new Event("click");
+  btn.dispatchEvent(event);
+});
+
+window.addEventListener("keyup", (e) => {
+  const btn = getPressedBtn(e);
+  if (!btn) return;
+  btn.classList.remove("btn-active");
+});
+
+function getPressedBtn(event) {
+  return event.code === "Enter"
+    ? equalsButton
+    : document.querySelector(`.btn[data-key="${event.key}"]`);
+}
+
 function getOperands(str) {
   const operatorIndex = getOperatorIndex(str);
   if (operatorIndex === -1) return [null, null];
