@@ -2,9 +2,9 @@
 
 An on-screen calculator using JavaScript, HTML, and CSS.
 
-### Design sketch:
+### Design:
 
-![Design sketch](./img/doc/design-sketch.png)
+![Design](./img/doc/design.png)
 
 ### Current bugs:
 
