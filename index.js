@@ -8,6 +8,10 @@ const clearOneButton = document.querySelector(".clear-one");
 const mainLine = document.querySelector(".main-line");
 const previousLine = document.querySelector(".previous-line");
 
+const DECIMAL_POINT_PRECISION = 6;
+const EXPONENTIAL_PRECISION = 5;
+const MAX_CHARACTERS_ON_LINE = 11;
+
 let operator = null;
 let nextOperator = null;
 let isError = false;
@@ -33,7 +37,8 @@ function getOperands(str) {
 function getOperatorIndex(str) {
   // begin from 1 to skip potential unary minus
   for (let i = 1; i < str.length; ++i) {
-    if (str[i] === operator) return i;
+    // !== "e" for 1e+5+123 edge case
+    if (str[i] === operator && str[i - 1] !== "e") return i;
   }
   return -1;
 }
@@ -43,8 +48,13 @@ function equalsBtnHandler(e) {
   if (!firstOperand || !secondOperand || !operator) return;
   previousLine.textContent = mainLine.textContent + "=";
   const result = operate(+firstOperand, +secondOperand, operator);
-  if (typeof result === "string") changeStyleToError();
-  mainLine.textContent = result;
+  if (typeof result === "string") {
+    changeStyleToError();
+    mainLine.textContent = result;
+    operator = null;
+    return;
+  }
+  mainLine.textContent = trimNumberPrecisionIfExceedsLength(result);
   if (nextOperator) {
     mainLine.textContent += nextOperator;
     operator = nextOperator;
@@ -52,6 +62,18 @@ function equalsBtnHandler(e) {
     return;
   }
   operator = null;
+}
+
+function trimNumberPrecisionIfExceedsLength(number) {
+  let [integerPart, decimalPointPart] = number.toString().split(".");
+  decimalPointPart ??= "";
+  if (integerPart.length + decimalPointPart.length >= MAX_CHARACTERS_ON_LINE) {
+    number =
+      integerPart.length + DECIMAL_POINT_PRECISION < MAX_CHARACTERS_ON_LINE
+        ? number.toFixed(DECIMAL_POINT_PRECISION)
+        : number.toExponential(EXPONENTIAL_PRECISION);
+  }
+  return number;
 }
 
 function changeStyleToError() {
