@@ -101,6 +101,11 @@ body {
   transform: scale(0.95);
 }
 
+.btn-active {
+  box-shadow: none;
+  transform: scale(0.95);
+}
+
 .btn:hover {
   background-color: rgb(215, 217, 219);
 }
