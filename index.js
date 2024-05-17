@@ -10,7 +10,6 @@ const previousLine = document.querySelector(".previous-line");
 
 let operator = null;
 let nextOperator = null;
-let isAnyOperatorBtnPressed = false;
 let isError = false;
 
 clearAllButton.addEventListener("click", clearAllLines);
@@ -32,7 +31,6 @@ function getOperands(str) {
 }
 
 function getOperatorIndex(str) {
-  let isOperatorEncountered = false;
   // begin from 1 to skip potential unary minus
   for (let i = 1; i < str.length; ++i) {
     if (str[i] === operator) return i;
@@ -51,8 +49,9 @@ function equalsBtnHandler(e) {
     mainLine.textContent += nextOperator;
     operator = nextOperator;
     nextOperator = null;
-    isAnyOperatorBtnPressed = true;
-  } else isAnyOperatorBtnPressed = false;
+    return;
+  }
+  operator = null;
 }
 
 function changeStyleToError() {
@@ -76,11 +75,10 @@ function operatorButtonHandler(e) {
   if (isUnaryMinus(buttonValue)) {
     if (operator === "-" && buttonValue === "-") return;
     mainLine.textContent += buttonValue;
-  } else if (!isAnyOperatorBtnPressed && hasFistOperand()) {
+  } else if (!operator && hasFistOperand()) {
     operator = buttonValue;
     mainLine.textContent += buttonValue;
-    isAnyOperatorBtnPressed = true;
-  } else if (isAnyOperatorBtnPressed && !nextOperator && hasSecondOperand()) {
+  } else if (operator && !nextOperator && hasSecondOperand()) {
     nextOperator = buttonValue;
     equalsBtnHandler();
   }
@@ -109,6 +107,7 @@ function isUnaryMinus(currentOperator) {
 function numberButtonHandler(e) {
   const buttonValue = e.target.textContent;
   // prevent leading zeros for second operand
+  // and second decimals for both operands
   if (
     isNextNumberAlsoLeadingZero(buttonValue) ||
     isSecondDecimalPoint(buttonValue)
@@ -162,13 +161,22 @@ function isNextNumberAlsoLeadingZero(number) {
 function clearAllLines() {
   mainLine.textContent = "0";
   previousLine.textContent = "";
-  isAnyOperatorBtnPressed = false;
+  operator = null;
   changeStyleToNormal();
 }
 
 function clearOneCharacter() {
+  if (isError) {
+    mainLine.textContent = "";
+    isError = false;
+    changeStyleToNormal();
+    return;
+  }
   const charArray = mainLine.textContent.split("");
-  charArray.pop();
+  const deletedChar = charArray.pop();
+  if (operator && deletedChar === operator) {
+    operator = null;
+  }
   mainLine.textContent = charArray.join("");
 }
 
