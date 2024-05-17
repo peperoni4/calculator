@@ -68,7 +68,6 @@ function changeStyleToNormal() {
 }
 
 function operatorButtonHandler(e) {
-  // TODO: FORBID TO ENTER OPERATORS WHEN THERE IS NO FIRST OPERAND
   const buttonValue = e.target.textContent;
   if (isError) {
     mainLine.textContent = buttonValue === "-" ? "" : "0";
@@ -77,7 +76,7 @@ function operatorButtonHandler(e) {
   if (isUnaryMinus(buttonValue)) {
     if (operator === "-" && buttonValue === "-") return;
     mainLine.textContent += buttonValue;
-  } else if (!isAnyOperatorBtnPressed) {
+  } else if (!isAnyOperatorBtnPressed && hasFistOperand()) {
     operator = buttonValue;
     mainLine.textContent += buttonValue;
     isAnyOperatorBtnPressed = true;
@@ -85,6 +84,13 @@ function operatorButtonHandler(e) {
     nextOperator = buttonValue;
     equalsBtnHandler();
   }
+}
+
+function hasFistOperand() {
+  return (
+    mainLine.textContent.length >=
+    (mainLine.textContent.startsWith("-") ? 2 : 1)
+  );
 }
 
 function hasSecondOperand() {
